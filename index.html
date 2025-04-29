@@ -1,161 +1,25 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adilet Kopzhasar</title>
+  <title>Word Highlighter</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f7f6;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-
-    .content {
-      background-color: #ffffff;
-      border-radius: 8px;
-      padding: 30px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      width: 80%;
-      max-width: 800px;
-    }
-
-    h1 {
-      color: #007BFF;
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
-
-    h2 {
-      color: #007BFF;
-      font-size: 24px;
-      margin-top: 20px;
-      margin-bottom: 15px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #007BFF;
-      color: white;
-    }
-
-    ul, ol {
-      list-style-position: inside;
-      padding-left: 20px;
-    }
-
-    .button {
-      background-color: #007BFF;
-      color: white;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-
-    .button:hover {
-      background-color: #0056b3;
-    }
-
-    .footer {
-      font-size: 14px;
-      color: #777;
-      margin-top: 40px;
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    #output { margin-top: 20px; white-space: pre-wrap; }
+    strong { background-color: yellow; }
   </style>
-  <script>
-    function changeLanguage(language) {
-      if (language === 'en') {
-        document.getElementById('name').innerHTML = 'Adilet Kopzhasar';
-        document.getElementById('ageTitle').innerHTML = 'Age';
-        document.getElementById('contactTitle').innerHTML = 'Contact';
-        document.getElementById('gpa').innerHTML = 'Astana BIL student with a 4.7 GPA';
-        document.getElementById('football').innerHTML = 'Football player and champion of Kazakhstan';
-        document.getElementById('volunteer').innerHTML = 'Volunteer at the World Nomad Games 2024';
-        document.getElementById('leadership').innerHTML = 'Leadership';
-        document.getElementById('responsibility').innerHTML = 'Responsibility';
-        document.getElementById('languageBtn').innerHTML = 'Switch to Russian';
-      } else {
-        document.getElementById('name').innerHTML = 'Адилет Копжасар';
-        document.getElementById('ageTitle').innerHTML = 'Возраст';
-        document.getElementById('contactTitle').innerHTML = 'Контакт';
-        document.getElementById('gpa').innerHTML = 'Студент Astana BIL с GPA 4.7';
-        document.getElementById('football').innerHTML = 'Футболист и чемпион Казахстана';
-        document.getElementById('volunteer').innerHTML = 'Волонтер на Всемирных играх кочевников 2024';
-        document.getElementById('leadership').innerHTML = 'Лидерство';
-        document.getElementById('responsibility').innerHTML = 'Ответственность';
-        document.getElementById('languageBtn').innerHTML = 'Switch to English';
-      }
-    }
-
-    function toggleLanguage() {
-      var currentLanguage = document.getElementById('languageBtn').innerHTML;
-      if (currentLanguage === 'Switch to Russian') {
-        changeLanguage('ru');
-      } else {
-        changeLanguage('en');
-      }
-    }
-
-    // Initialize the page with English content and set up event listener
-    window.onload = function() {
-      document.getElementById('languageBtn').addEventListener('click', toggleLanguage);
-      changeLanguage('en'); // Start with English
-    }
-  </script>
 </head>
 <body>
-  <div class="content">
-    <h1 id="name">Adilet Kopzhasar</h1>
-    <table>
-      <tr>
-        <th id="ageTitle">Age</th>
-        <th id="contactTitle">Contact</th>
-      </tr>
-      <tr>
-        <td>16</td>
-        <td>+77785856361</td>
-      </tr>
-    </table>
 
-    <h2>Adilet is:</h2>
-    <ul>
-      <li id="gpa">Astana BIL student with a 4.7 GPA</li>
-      <li id="football">Football player and champion of Kazakhstan</li>
-      <li id="volunteer">Volunteer at the World Nomad Games 2024</li>
-    </ul>
+  <h2>Upload a Text File and Highlight a Word</h2>
 
-    <h2>List of skills:</h2>
-    <ol>
-      <li id="leadership">Leadership</li>
-      <li id="responsibility">Responsibility</li>
-    </ol>
+  <form method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".txt" required><br><br>
+    <input type="text" name="word" placeholder="Enter word to highlight" value="{{ word }}" required>
+    <button type="submit">Highlight</button>
+  </form>
 
-    <h2>Reach Out:</h2>
-    <button id="languageBtn" class="button">Switch to Russian</button>
+  <div id="output">{{ highlighted_text | safe }}</div>
 
-    <div class="footer">
-      <p>&copy; 2025 Adilet Kopzhasar. All rights reserved.</p>
-    </div>
-  </div>
 </body>
 </html>
