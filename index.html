@@ -6,20 +6,42 @@
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; }
     #output { margin-top: 20px; white-space: pre-wrap; }
-    strong { background-color: yellow; }
   </style>
 </head>
 <body>
 
   <h2>Upload a Text File and Highlight a Word</h2>
 
-  <form method="POST" enctype="multipart/form-data">
-    <input type="file" name="file" accept=".txt" required><br><br>
-    <input type="text" name="word" placeholder="Enter word to highlight" value="{{ word }}" required>
-    <button type="submit">Highlight</button>
-  </form>
+  <input type="file" id="fileInput" accept=".txt"><br><br>
+  <input type="text" id="wordInput" placeholder="Enter word to highlight">
+  <button onclick="highlightWord()">Highlight</button>
 
-  <div id="output">{{ highlighted_text | safe }}</div>
+  <div id="output"></div>
+
+  <script>
+    let fileContent = "";
+
+    document.getElementById("fileInput").addEventListener("change", function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          fileContent = e.target.result;
+          document.getElementById("output").textContent = fileContent;
+        };
+        reader.readAsText(file);
+      }
+    });
+
+    function highlightWord() {
+      const word = document.getElementById("wordInput").value;
+      if (!word) return;
+
+      const regex = new RegExp(`\\b(${word})\\b`, 'gi'); // case-insensitive, full word match
+      const highlighted = fileContent.replace(regex, "<strong>$1</strong>");
+      document.getElementById("output").innerHTML = highlighted;
+    }
+  </script>
 
 </body>
 </html>
